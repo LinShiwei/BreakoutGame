@@ -18,3 +18,6 @@ enum NodeZPosition : CGFloat{
     case GameOver
 }
 let maxLife = 100
+let startLevel = 2
+let endLevel = 2
+let levelFileNamePrefix = "BreakOutGameLevel"

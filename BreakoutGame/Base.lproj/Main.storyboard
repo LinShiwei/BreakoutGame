@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8118" systemVersion="15A172" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BV1-FR-VrT">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BV1-FR-VrT">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8098"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Game View Controller-->
         <scene sceneID="tXr-a1-R10">
             <objects>
-                <viewController id="BV1-FR-VrT" customClass="GameViewController" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BV1-FR-VrT" customClass="GameViewController" customModule="BreakoutGame" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="8aa-yV-Osq"/>
                         <viewControllerLayoutGuide type="bottom" id="qHh-Mt-9TT"/>
@@ -15,11 +17,48 @@
                     <view key="view" multipleTouchEnabled="YES" contentMode="scaleToFill" id="3se-qz-xqx" customClass="SKView">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="0" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="E0m-hV-xmv">
+                                <rect key="frame" x="536" y="28" width="44" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="pEe-aC-mnR"/>
+                                    <constraint firstAttribute="width" constant="44" id="uPJ-hf-2IJ"/>
+                                </constraints>
+                                <state key="normal" image="Refresh"/>
+                                <connections>
+                                    <action selector="refreshButtonTap:" destination="BV1-FR-VrT" eventType="touchUpInside" id="FlH-vW-bNz"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UNl-i2-A2m">
+                                <rect key="frame" x="20" y="28" width="44" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="UB4-IJ-vuY"/>
+                                    <constraint firstAttribute="width" constant="44" id="mkd-gM-X99"/>
+                                </constraints>
+                                <state key="normal" image="Pause"/>
+                                <connections>
+                                    <action selector="pauseButtonTap:" destination="BV1-FR-VrT" eventType="touchUpInside" id="hXF-oM-vaM"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="UNl-i2-A2m" firstAttribute="top" secondItem="8aa-yV-Osq" secondAttribute="bottom" constant="8" id="JIr-RB-5mU"/>
+                            <constraint firstItem="E0m-hV-xmv" firstAttribute="trailing" secondItem="3se-qz-xqx" secondAttribute="trailingMargin" id="i0P-9p-GbZ"/>
+                            <constraint firstItem="E0m-hV-xmv" firstAttribute="top" secondItem="8aa-yV-Osq" secondAttribute="bottom" constant="8" id="m49-0A-Fgv"/>
+                            <constraint firstItem="UNl-i2-A2m" firstAttribute="leading" secondItem="3se-qz-xqx" secondAttribute="leadingMargin" id="whW-nN-VJe"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="pauseButton" destination="UNl-i2-A2m" id="znI-uB-qQh"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SZV-WD-TEh" sceneMemberID="firstResponder"/>
             </objects>
         </scene>
     </scenes>
+    <resources>
+        <image name="Pause" width="44" height="44"/>
+        <image name="Refresh" width="44" height="44"/>
+    </resources>
 </document>

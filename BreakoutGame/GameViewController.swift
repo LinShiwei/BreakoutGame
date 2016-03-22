@@ -13,6 +13,18 @@ class GameViewController: UIViewController {
     
     var currentGame: GameScene!
     
+    @IBOutlet weak var pauseButton: UIButton!
+    @IBAction func refreshButtonTap(sender: UIButton) {
+        currentGame.refreshLevel()
+    }
+    @IBAction func pauseButtonTap(sender: UIButton) {
+        if currentGame.paused {
+            pauseButton.setImage(UIImage(named: "Pause"), forState: .Normal)
+        }else{
+            pauseButton.setImage(UIImage(named: "Play"), forState: .Normal)
+        }
+        currentGame.paused = !currentGame.paused
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         

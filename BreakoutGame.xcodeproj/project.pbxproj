@@ -17,6 +17,8 @@
 		564A77CE1CA168E70023FEF8 /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 564A77CD1CA168E70023FEF8 /* Helper.swift */; };
 		564A77D01CA1692D0023FEF8 /* Define.swift in Sources */ = {isa = PBXBuildFile; fileRef = 564A77CF1CA1692D0023FEF8 /* Define.swift */; };
 		564A77D21CA169480023FEF8 /* SpaceshipNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 564A77D11CA169480023FEF8 /* SpaceshipNode.swift */; };
+		564A77D51CA16D900023FEF8 /* BreakOutGameLevel1.txt in Resources */ = {isa = PBXBuildFile; fileRef = 564A77D41CA16D900023FEF8 /* BreakOutGameLevel1.txt */; };
+		564A77D71CA171410023FEF8 /* BreakOutGameLevel2.txt in Resources */ = {isa = PBXBuildFile; fileRef = 564A77D61CA171410023FEF8 /* BreakOutGameLevel2.txt */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +34,8 @@
 		564A77CD1CA168E70023FEF8 /* Helper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
 		564A77CF1CA1692D0023FEF8 /* Define.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Define.swift; sourceTree = "<group>"; };
 		564A77D11CA169480023FEF8 /* SpaceshipNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpaceshipNode.swift; sourceTree = "<group>"; };
+		564A77D41CA16D900023FEF8 /* BreakOutGameLevel1.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = BreakOutGameLevel1.txt; sourceTree = "<group>"; };
+		564A77D61CA171410023FEF8 /* BreakOutGameLevel2.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = BreakOutGameLevel2.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,10 +77,20 @@
 				564A77BD1CA168AA0023FEF8 /* GameViewController.swift */,
 				564A77BF1CA168AA0023FEF8 /* Main.storyboard */,
 				564A77C21CA168AA0023FEF8 /* Assets.xcassets */,
+				564A77D31CA16D900023FEF8 /* content */,
 				564A77C41CA168AA0023FEF8 /* LaunchScreen.storyboard */,
 				564A77C71CA168AA0023FEF8 /* Info.plist */,
 			);
 			path = BreakoutGame;
+			sourceTree = "<group>";
+		};
+		564A77D31CA16D900023FEF8 /* content */ = {
+			isa = PBXGroup;
+			children = (
+				564A77D41CA16D900023FEF8 /* BreakOutGameLevel1.txt */,
+				564A77D61CA171410023FEF8 /* BreakOutGameLevel2.txt */,
+			);
+			path = content;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -138,10 +152,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				564A77D51CA16D900023FEF8 /* BreakOutGameLevel1.txt in Resources */,
 				564A77BA1CA168AA0023FEF8 /* GameScene.sks in Resources */,
 				564A77C61CA168AA0023FEF8 /* LaunchScreen.storyboard in Resources */,
 				564A77C31CA168AA0023FEF8 /* Assets.xcassets in Resources */,
 				564A77C11CA168AA0023FEF8 /* Main.storyboard in Resources */,
+				564A77D71CA171410023FEF8 /* BreakOutGameLevel2.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -307,6 +323,7 @@
 				564A77CC1CA168AA0023FEF8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

@@ -21,6 +21,7 @@ class SpaceshipNode: SKSpriteNode {
         physicsBody!.contactTestBitMask = PhysicsCategory.Gift
         physicsBody!.collisionBitMask = PhysicsCategory.Ball | PhysicsCategory.Wall | PhysicsCategory.Track
         physicsBody!.affectedByGravity = false
+        physicsBody!.restitution = 0
         physicsBody!.mass = 2
 //        physicsBody!.dynamic = false
     }

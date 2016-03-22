@@ -37,10 +37,12 @@ class GameScene: SKScene,SKPhysicsContactDelegate {
     
     var motionManager: CMMotionManager!
     
-    var LevelLabel: SKLabelNode!
-    var level: Int = 0 {
+    var levelLabel: SKLabelNode!
+    var level: Int = startLevel {
         didSet {
-            LevelLabel.text = "Level: \(level)"
+            if let label = levelLabel {
+                label.text = "Level: \(level)"
+            }
         }
     }
     var lifeLabel: SKLabelNode!
@@ -65,14 +67,15 @@ class GameScene: SKScene,SKPhysicsContactDelegate {
         createSpaceship()
         createTracks()
         createWall()
-        createBricks()
+        createBricksAndStonesOfLevel(level)
+//        createBricks()
         createBall()
         
     }
     //MARK: Touch
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         if gameIsOver {
-            enterLevelAt(level:0)
+            enterLevelAt()
         }else{
             #if (arch(i386) || arch(x86_64))
                 if let touch = touches.first,let spaceshipNode = childNodeWithName("spaceship") {
@@ -115,12 +118,12 @@ class GameScene: SKScene,SKPhysicsContactDelegate {
         addChild(background)
     }
     func createLevelLabel(){
-        LevelLabel = SKLabelNode(fontNamed: "Chalkduster")
-        LevelLabel.text = "Level: \(level)"
-        LevelLabel.position = CGPoint(x: size.width/(bricksColumn+1), y: size.width/(bricksColumn+1)/2)
-        LevelLabel.horizontalAlignmentMode = .Left
-        LevelLabel.zPosition = NodeZPosition.Label.rawValue
-        addChild(LevelLabel)
+        levelLabel = SKLabelNode(fontNamed: "Chalkduster")
+        levelLabel.text = "Level: \(level)"
+        levelLabel.position = CGPoint(x: size.width/(bricksColumn+1), y: size.width/(bricksColumn+1)/2)
+        levelLabel.horizontalAlignmentMode = .Left
+        levelLabel.zPosition = NodeZPosition.Label.rawValue
+        addChild(levelLabel)
     }
     func createLifeLabel(){
         lifeLabel = SKLabelNode(fontNamed: "Chalkduster")
@@ -139,7 +142,7 @@ class GameScene: SKScene,SKPhysicsContactDelegate {
         
     }
     func createTrackAt(position:CGPoint)->SKSpriteNode{
-        let track = SKSpriteNode(color: UIColor.greenColor(), size: CGSize(width:size.width,height:1))
+        let track = SKSpriteNode(color: UIColor.clearColor(), size: CGSize(width:size.width,height:1))
         track.zPosition = NodeZPosition.Spaceship.rawValue
         //        track.position = CGPoint(x: size.width/2, y: size.height/7)
         track.position = position
@@ -196,18 +199,18 @@ class GameScene: SKScene,SKPhysicsContactDelegate {
         wall.physicsBody!.dynamic = false
         addChild(wall)
     }
-    func createBricks(){
-        for row in 1...Int(bricksRow){
-            for column in 1...Int(bricksColumn)-5{
-                createBrickAt(row: row, column: column)
-            }
-        }
-        
-    }
+//    func createBricks(){
+//        for row in 1...Int(bricksRow){
+//            for column in 1...Int(bricksColumn)-5{
+//                createBrickAt(row: row, column: column)
+//            }
+//        }
+//        
+//    }
     func createBrickAt(row row:Int,column:Int){
         let color = GKRandomSource.sharedRandom().arrayByShufflingObjectsInArray(brickColors) as! [UIColor]
         let brick = SKSpriteNode(color: color[0], size: brickSize)
-        brick.position = CGPoint(x: CGFloat(column) * brickSize.width, y: size.height-brickSize.width/2+brickSize.height/2-CGFloat(row)*brickSize.height - size.height/4)
+        brick.position = CGPoint(x: CGFloat(column+1) * brickSize.width, y: size.height-brickSize.width/2+brickSize.height/2-CGFloat(row+1)*brickSize.height)
         
         brick.zPosition = NodeZPosition.Brick.rawValue
         brick.physicsBody = SKPhysicsBody(rectangleOfSize: brick.size)
@@ -221,7 +224,7 @@ class GameScene: SKScene,SKPhysicsContactDelegate {
     }
     func createStoneAt(row row:Int,column:Int){
         let stone = SKSpriteNode(color: UIColor.grayColor(), size: brickSize)
-        stone.position = CGPoint(x: CGFloat(column) * brickSize.width, y: size.height-brickSize.width/2+brickSize.height/2-CGFloat(row)*brickSize.height - size.height/4)
+        stone.position = CGPoint(x: CGFloat(column+1) * brickSize.width, y: size.height-brickSize.width/2+brickSize.height/2-CGFloat(row+1)*brickSize.height)
         
         stone.zPosition = NodeZPosition.Stone.rawValue
         stone.physicsBody = SKPhysicsBody(rectangleOfSize: stone.size)
@@ -233,14 +236,13 @@ class GameScene: SKScene,SKPhysicsContactDelegate {
         stone.name = "stone"
         addChild(stone)
     }
-    func createBricksAndStonesOfLevel(level:Int=1) {
-        
-        if let levelPath = NSBundle.mainBundle().pathForResource("level1", ofType: "txt"),
+    func createBricksAndStonesOfLevel(level:Int = startLevel) {
+        let fileName = levelFileNamePrefix + String(level)
+        if let levelPath = NSBundle.mainBundle().pathForResource(fileName, ofType: "txt"),
             let levelString = try? String(contentsOfFile: levelPath, usedEncoding: nil) {
                 
                 let lines = levelString.componentsSeparatedByString("\n")
-                
-                for (row, line) in lines.reverse().enumerate() {
+                for (row, line) in lines.enumerate() {
                     for (column, letter) in line.characters.enumerate() where line.characters.count<=bricksColumnInt{
                         if letter == "s" {
                             createStoneAt(row: row, column: column)
@@ -256,7 +258,7 @@ class GameScene: SKScene,SKPhysicsContactDelegate {
         let ball = SKSpriteNode(imageNamed: "BallBlue")
         ball.physicsBody = SKPhysicsBody(circleOfRadius: ball.size.width / 2.0)
         ball.physicsBody!.categoryBitMask = PhysicsCategory.Ball
-        ball.physicsBody!.collisionBitMask = PhysicsCategory.Wall | PhysicsCategory.Spaceship | PhysicsCategory.Ball | PhysicsCategory.Brick
+        ball.physicsBody!.collisionBitMask = PhysicsCategory.Wall | PhysicsCategory.Spaceship | PhysicsCategory.Ball | PhysicsCategory.Brick | PhysicsCategory.Stone
         ball.physicsBody!.contactTestBitMask = PhysicsCategory.Brick
         ball.physicsBody!.mass = 0.1
         ball.physicsBody!.friction = 1
@@ -323,7 +325,11 @@ class GameScene: SKScene,SKPhysicsContactDelegate {
         if let _ = childNodeWithName("brick"){
             //            score += 10
         }else{
-            enterLevelAt(level:level+1)
+            if level+1 > endLevel {
+                enterLevelAt(level: endLevel)
+            }else{
+                enterLevelAt(level:level+1)
+            }
         }
     }
     func gameOver(){
@@ -331,18 +337,20 @@ class GameScene: SKScene,SKPhysicsContactDelegate {
         physicsWorld.speed = 0
         createGameOverNode()
     }
-    func enterLevelAt(level level:Int){
+    func refreshLevel(){
+        enterLevelAt(level: level)
+    }
+    func enterLevelAt(level level:Int=startLevel){
         let currentLife = life
         let newGame = GameScene(size: self.size)
-        
+        newGame.level = level
         newGame.viewController = self.viewController
         physicsWorld.speed = 0
         self.viewController.currentGame = newGame
         
         let transition = SKTransition.crossFadeWithDuration(1)
         self.view?.presentScene(newGame, transition: transition)
-        newGame.level = level
-        if level == 0 {
+        if level == 1 {
             newGame.life = maxLife
         }else{
             newGame.life = currentLife
