@@ -8,16 +8,23 @@
 
 import Foundation
 import CoreGraphics
-
+import UIKit
 enum NodeZPosition : CGFloat{
     case Background = 0
+//    case Bullet
     case Wall,Brick,Spaceship,Label,Stone
     case Gift
     case Ball
     case GameOverNode
     case GameOver
+    case Bullet
 }
-let maxLife = 100
-let startLevel = 2
+enum KindOfGift : String{
+    case Length = "LengthGift"
+    case Bullet = "BulletGift"
+}
+let maxLife = 2
+let startLevel = 1
 let endLevel = 2
 let levelFileNamePrefix = "BreakOutGameLevel"
+let shipSize = CGSize(width: UIScreen.mainScreen().bounds.size.width*3/10, height: UIScreen.mainScreen().bounds.size.height/40)
