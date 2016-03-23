@@ -10,7 +10,7 @@ import UIKit
 import SpriteKit
 class GiftNode: SKSpriteNode {
     func setupAtPosition(pos:CGPoint){
-        configureName()
+        configureGift()
         position = pos
         zPosition = NodeZPosition.Gift.rawValue
         configurePhysics()
@@ -25,13 +25,15 @@ class GiftNode: SKSpriteNode {
         physicsBody!.linearDamping = 0
 
     }
-    func configureName(){
+    func configureGift(){
         let randomNumber = RandomInt(min: 1, max: 100)
         switch randomNumber{
-        case 1...5:
+        case 1...80:
             name = KindOfGift.Length.rawValue
-        case 6...100:
+            color = UIColor.yellowColor()
+        case 81...100:
             name = KindOfGift.Bullet.rawValue
+            color = UIColor.purpleColor()
         default:break
         }
     }

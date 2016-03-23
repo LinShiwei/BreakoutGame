@@ -100,8 +100,8 @@ class GameScene: SKScene,SKPhysicsContactDelegate {
     }
     
     func createBackground(){
-        let texture = SKTexture(imageNamed: "Background")
-        let background = SKSpriteNode(texture: texture, color: UIColor.clearColor(), size: size)
+        let texture = SKTexture(imageNamed: "Background2")
+        let background = SKSpriteNode(texture: texture, size: size)
         background.position = CGPoint(x: size.width/2, y: size.height/2)
         background.blendMode = .Replace
         background.zPosition = NodeZPosition.Background.rawValue
@@ -124,7 +124,9 @@ class GameScene: SKScene,SKPhysicsContactDelegate {
         addChild(lifeLabel)
     }
     func createSpaceship(){
-        let spaceship = SpaceshipNode(color: shipColor, size: shipSize)
+        let texture = SKTexture(imageNamed: "Spaceship")
+        let spaceship = SpaceshipNode(texture: texture, size: shipSize)
+//        let spaceship = SpaceshipNode(color: shipColor, size: shipSize)
         spaceship.setupAtPosition(CGPoint(x: size.width/2, y: size.height/7 + shipSize.height/2))
         addChild(spaceship)
     }
@@ -139,30 +141,37 @@ class GameScene: SKScene,SKPhysicsContactDelegate {
         let thickness = self.size.width / (bricksColumn+1)
         let size : CGSize
         let position : CGPoint
+        let texture : SKTexture
         switch orientation{
         case "Left":
+            texture = SKTexture(imageNamed: "Wall")
             size = CGSize(width: thickness, height: self.size.height)
             position = CGPoint(x: 0, y: self.size.height/2)
         case "Right":
+            texture = SKTexture(imageNamed: "Wall")
             size = CGSize(width: thickness, height: self.size.height)
             position = CGPoint(x: self.size.width, y: self.size.height/2)
             
         case "Top":
+            texture = SKTexture(imageNamed: "TopWall")
             size = CGSize(width: self.size.width - thickness, height: thickness)
             position = CGPoint(x: self.size.width/2, y: self.size.height)
         default:
+            texture = SKTexture(imageNamed: "TopWall")
             size = CGSize(width: self.size.width - thickness, height: thickness)
             position = CGPoint(x: self.size.width/2, y: 0)
         }
-        let wall = SKSpriteNode(color: wallColor, size: size)
+//        let wall = SKSpriteNode(color: wallColor, size: size)
+        let wall = SKSpriteNode(texture: texture, color: UIColor.blueColor(), size: size)
         wall.name = "wall"
         wall.zPosition = NodeZPosition.Wall.rawValue
         wall.position = position
-        wall.physicsBody = SKPhysicsBody(rectangleOfSize: wall.size)
+        wall.physicsBody = SKPhysicsBody(texture: texture, size: wall.size)
         wall.physicsBody!.categoryBitMask = PhysicsCategory.Wall
         wall.physicsBody!.collisionBitMask = PhysicsCategory.Ball
         wall.physicsBody!.contactTestBitMask = PhysicsCategory.Bullet
         wall.physicsBody!.affectedByGravity = false
+        wall.physicsBody!.restitution = 0
         wall.physicsBody!.dynamic = false
         addChild(wall)
     }
@@ -180,8 +189,11 @@ class GameScene: SKScene,SKPhysicsContactDelegate {
         addChild(deadLine)
     }
     func createBrickAt(row row:Int,column:Int){
-        let color = GKRandomSource.sharedRandom().arrayByShufflingObjectsInArray(brickColors) as! [UIColor]
-        let brick = SKSpriteNode(color: color[0], size: brickSize)
+        let imageName = "Brick" + String(RandomInt(min: 1, max: 4))
+        let texture = SKTexture(imageNamed: imageName)
+//        let color = GKRandomSource.sharedRandom().arrayByShufflingObjectsInArray(brickColors) as! [UIColor]
+//        let brick = SKSpriteNode(color: color[0], size: brickSize)
+        let brick = SKSpriteNode(texture: texture, size: brickSize)
         brick.position = CGPoint(x: CGFloat(column+1) * brickSize.width, y: size.height-brickSize.width/2+brickSize.height/2-CGFloat(row+1)*brickSize.height)
         
         brick.zPosition = NodeZPosition.Brick.rawValue
@@ -190,12 +202,15 @@ class GameScene: SKScene,SKPhysicsContactDelegate {
         brick.physicsBody!.collisionBitMask = PhysicsCategory.Ball
         brick.physicsBody!.contactTestBitMask = PhysicsCategory.Ball
         brick.physicsBody!.affectedByGravity = false
+        brick.physicsBody!.restitution = 0
         brick.physicsBody!.dynamic = false
         brick.name = "brick"
         addChild(brick)
     }
     func createStoneAt(row row:Int,column:Int){
-        let stone = SKSpriteNode(color: UIColor.grayColor(), size: brickSize)
+        let texture = SKTexture(imageNamed: "Stone")
+        let stone = SKSpriteNode(texture: texture, size: brickSize)
+//        let stone = SKSpriteNode(color: UIColor.grayColor(), size: brickSize)
         stone.position = CGPoint(x: CGFloat(column+1) * brickSize.width, y: size.height-brickSize.width/2+brickSize.height/2-CGFloat(row+1)*brickSize.height)
         
         stone.zPosition = NodeZPosition.Stone.rawValue
@@ -204,6 +219,7 @@ class GameScene: SKScene,SKPhysicsContactDelegate {
         stone.physicsBody!.collisionBitMask = PhysicsCategory.Ball
         stone.physicsBody!.contactTestBitMask = PhysicsCategory.Bullet
         stone.physicsBody!.affectedByGravity = false
+        stone.physicsBody!.restitution = 0
         stone.physicsBody!.dynamic = false
         stone.name = "stone"
         addChild(stone)
@@ -283,14 +299,7 @@ class GameScene: SKScene,SKPhysicsContactDelegate {
     }
     func ballHitBrick(ball ball:BallNode,brick:SKSpriteNode){
         destoryBrick(brick)
-        if let _ = childNodeWithName("brick"){
-        }else{
-            if level+1 > endLevel {
-                enterLevelAt(level: endLevel)
-            }else{
-                enterLevelAt(level:level+1)
-            }
-        }
+        
     }
     func spaceshipEatGift(spaceship spaceship:SpaceshipNode,gift:GiftNode){
         spaceship.strengthenWith(KindOfGift(rawValue: gift.name!)!)
@@ -308,10 +317,9 @@ class GameScene: SKScene,SKPhysicsContactDelegate {
                 createBall()
             }
         }else{
-            if node is GiftNode{
-                node.name = ""
-                node.removeFromParent()
-            }
+            node.name = ""
+            node.removeFromParent()
+        
         }
     }
     func bulletHitWall(bullet:SKSpriteNode){
@@ -322,17 +330,28 @@ class GameScene: SKScene,SKPhysicsContactDelegate {
         consumeBullet(bullet)
     }
     func destoryBrick(brick:SKSpriteNode){
-        if RandomInt(min: 1, max: 100) < 100 {
+        if RandomInt(min: 1, max: 100) < 15 {
             createGiftAtPosition(brick.position)
         }
         brick.name = ""
         brick.removeFromParent()
+        if let _ = childNodeWithName("brick"){
+        }else{
+            if level+1 > endLevel {
+                enterLevelAt(level: endLevel)
+            }else{
+                enterLevelAt(level:level+1)
+            }
+        }
     }
     func consumeBullet(bullet:SKSpriteNode){
         bullet.name = ""
         bullet.removeFromParent()
     }
     func gameOver(){
+        if let spaceship = childNodeWithName("spaceship"){
+            spaceship.removeAllActions()
+        }
         gameIsOver = true
         physicsWorld.speed = 0
         createGameOverNode()

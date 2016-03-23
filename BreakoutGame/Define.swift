@@ -11,19 +11,18 @@ import CoreGraphics
 import UIKit
 enum NodeZPosition : CGFloat{
     case Background = 0
-//    case Bullet
+    case Bullet
     case Wall,Brick,Spaceship,Label,Stone
     case Gift
     case Ball
     case GameOverNode
     case GameOver
-    case Bullet
 }
 enum KindOfGift : String{
     case Length = "LengthGift"
     case Bullet = "BulletGift"
 }
-let maxLife = 2
+let maxLife = 100
 let startLevel = 1
 let endLevel = 2
 let levelFileNamePrefix = "BreakOutGameLevel"
