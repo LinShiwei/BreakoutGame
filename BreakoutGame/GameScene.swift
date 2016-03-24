@@ -240,8 +240,9 @@ class GameScene: SKScene,SKPhysicsContactDelegate {
     func createBall(){
         guard let spaceshipNode = childNodeWithName("spaceship") as? SpaceshipNode else{return}
         let ball = BallNode(imageNamed: "BallBlue")
-        let point = CGPoint(x: spaceshipNode.size.width/3, y: spaceshipNode.size.height/2+ball.size.height/2)
+        let point = CGPoint(x: spaceshipNode.size.width/6, y: spaceshipNode.size.height/2+ball.size.height/2)
         ball.setupAtPosition(point,inNode:spaceshipNode)
+        ball.configureDistanceConstraintToPoint(point, inNode: spaceshipNode)
         addChild(ball)
         ball.shootAfterDuration(2)
     }
@@ -311,13 +312,17 @@ class GameScene: SKScene,SKPhysicsContactDelegate {
         if node.name == "ball"{
             node.name = ""
             node.removeFromParent()
-            runAction(SKAction.playSoundFileNamed("Basso.caf", waitForCompletion: false))
-            life -= 1
-            if life == 0 {
-                gameOver()
-            }else{
-                createBall()
+            guard let _ = childNodeWithName("ball") else{
+                runAction(SKAction.playSoundFileNamed("Basso.caf", waitForCompletion: false))
+                life -= 1
+                if life == 0 {
+                    gameOver()
+                }else{
+                    createBall()
+                }
+                return
             }
+            
         }else{
             node.name = ""
             node.removeFromParent()
@@ -331,7 +336,7 @@ class GameScene: SKScene,SKPhysicsContactDelegate {
         consumeBullet(bullet)
     }
     func destoryBrick(brick:SKSpriteNode){
-        if RandomInt(min: 1, max: 100) < 15 {
+        if RandomInt(min: 1, max: 100) < 50 {
             createGiftAtPosition(brick.position)
         }
         brick.name = ""
@@ -358,9 +363,10 @@ class GameScene: SKScene,SKPhysicsContactDelegate {
         createGameOverNode()
     }
     func refreshLevel(){
-        guard let ball = childNodeWithName("ball") else{return}
-        ball.name = ""
-        ball.removeFromParent()
+        enumerateChildNodesWithName("ball"){ ball,_ in
+            ball.name = ""
+            ball.removeFromParent()
+        }
         life -= 1
         if life == 0 {
             gameOver()

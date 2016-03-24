@@ -50,7 +50,14 @@ class SpaceshipNode: SKSpriteNode {
                 
                 self.size = shipSize
                 self.configurePhysicsWith(self.size)
-               
+                if let scene = self.parent as? SKScene {
+                    scene.enumerateChildNodesWithName("ball"){ [weak self] ball,_ in
+                        if let ballNode = ball as? BallNode where !ballNode.hasShoot{
+                            let point = CGPoint(x: self!.size.width/6, y: self!.size.height/2+ballNode.size.height/2)
+                            ballNode.configureDistanceConstraintToPoint(point,inNode:self!)
+                        }
+                    }
+                }
                 }]
             )
             runAction(changeLengthAction,withKey: "LengthAction")
@@ -65,6 +72,35 @@ class SpaceshipNode: SKSpriteNode {
                 ]
             )
             runAction(SKAction.repeatAction(createBulletAction,count: 20),withKey: "BulletAction")
+        case .Triple:
+            if let gameScene = self.parent,let ball = gameScene.childNodeWithName("ball") as? BallNode,let velocity = ball.physicsBody?.velocity{
+//                let pos : CGPoint
+//                if !ball.hasShoot{
+//                    pos = CGPoint(x: ball.position.x+ball.size.width,y: ball.position.y )
+//                }else{
+//                    pos = ball.position
+//                }
+                var angle :CGFloat
+                if velocity == CGVector(dx: 0, dy: 0) {
+                    angle = 3.14/4.0
+                }else{
+                    angle = atan(velocity.dy/velocity.dx)
+                    if velocity.dy < 0 && velocity.dx < 0{
+                        angle += 3.14
+                    }
+                }
+                let texture = SKTexture(imageNamed: "BallBlue")
+                let newBall1 = BallNode(texture: texture)
+                newBall1.setupAtPosition(ball.position, inNode: gameScene)
+                gameScene.addChild(newBall1)
+                newBall1.shootAfterDuration(0,atAngel: angle + 0.26)
+                let newBall2 = BallNode(texture: texture)
+                newBall2.setupAtPosition(ball.position, inNode: gameScene)
+                gameScene.addChild(newBall2)
+                newBall2.shootAfterDuration(0,atAngel: angle - 0.26)
+            }
+        default:
+            break
         }
     }
     func createBulletAtPosition(pos:CGPoint){

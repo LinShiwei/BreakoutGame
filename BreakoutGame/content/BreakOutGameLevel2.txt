@@ -1,12 +1,12 @@
 
 
 
-b
-bb
-bbb
-bbbb
-bbbbb
-bbbbbb
-bbbbbbb
-bbbbbbbb
-sssssssssb
+
+
+
+
+b bbbbbb b
+bb bbbb bb
+bbb bb bbb
+bb bbbb bb
+b bbbbbb b

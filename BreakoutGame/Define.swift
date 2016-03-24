@@ -21,9 +21,11 @@ enum NodeZPosition : CGFloat{
 enum KindOfGift : String{
     case Length = "LengthGift"
     case Bullet = "BulletGift"
+    case Triple = "TripleGift"
+    case Magnet = "MagnetGift"
 }
 let maxLife = 100
-let startLevel = 3
-let endLevel = 3
+let startLevel = 1
+let endLevel = 6
 let levelFileNamePrefix = "BreakOutGameLevel"
 let shipSize = CGSize(width: UIScreen.mainScreen().bounds.size.width*3/10, height: UIScreen.mainScreen().bounds.size.height/40)

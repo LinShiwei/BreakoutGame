@@ -28,11 +28,17 @@ class GiftNode: SKSpriteNode {
     func configureGift(){
         let randomNumber = RandomInt(min: 1, max: 100)
         switch randomNumber{
-        case 1...80:
+        case 1...32:
             name = KindOfGift.Length.rawValue
-            color = UIColor.yellowColor()
-        case 81...100:
+            color = UIColor.blueColor()
+        case 33...65:
             name = KindOfGift.Bullet.rawValue
+            color = UIColor.redColor()
+        case 66...99:
+            name = KindOfGift.Triple.rawValue
+            color = UIColor.greenColor()
+        case 100:
+            name = KindOfGift.Magnet.rawValue
             color = UIColor.purpleColor()
         default:break
         }

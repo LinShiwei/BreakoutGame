@@ -16,7 +16,6 @@ class BallNode: SKSpriteNode {
         zPosition = NodeZPosition.Ball.rawValue
 
         configurePhysics()
-        configureDistanceConstraintToPoint(pos, inNode: node)
     }
     func configurePhysics(){
         physicsBody = SKPhysicsBody(circleOfRadius: size.width / 2.0)
@@ -31,12 +30,13 @@ class BallNode: SKSpriteNode {
         
 
     }
-    func shootAfterDuration(duration:NSTimeInterval){
+    func shootAfterDuration(duration:NSTimeInterval,atAngel angle:CGFloat=CGFloat(M_PI_4)){
+        let impulse = CGVector(dx: 75*cos(angle), dy: 75*sin(angle))
         let shootAction = SKAction.sequence([SKAction.waitForDuration(duration),SKAction.runBlock{
             self.hasShoot = true
             self.constraints?.first?.enabled = false
-//            self.physicsBody!.velocity = CGVector(dx: 0, dy: 0)
-            self.physicsBody!.applyImpulse(CGVector(dx: 50, dy: 50))
+            self.physicsBody!.velocity = CGVector(dx: 0, dy: 0)
+            self.physicsBody!.applyImpulse(impulse)
             
             }]
         )

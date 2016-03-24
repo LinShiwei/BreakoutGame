@@ -21,11 +21,14 @@
 		564A77D01CA1692D0023FEF8 /* Define.swift in Sources */ = {isa = PBXBuildFile; fileRef = 564A77CF1CA1692D0023FEF8 /* Define.swift */; };
 		564A77D21CA169480023FEF8 /* SpaceshipNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 564A77D11CA169480023FEF8 /* SpaceshipNode.swift */; };
 		564A77D51CA16D900023FEF8 /* BreakOutGameLevel1.txt in Resources */ = {isa = PBXBuildFile; fileRef = 564A77D41CA16D900023FEF8 /* BreakOutGameLevel1.txt */; };
-		564A77D71CA171410023FEF8 /* BreakOutGameLevel2.txt in Resources */ = {isa = PBXBuildFile; fileRef = 564A77D61CA171410023FEF8 /* BreakOutGameLevel2.txt */; };
+		564A77D71CA171410023FEF8 /* BreakOutGameLevel5.txt in Resources */ = {isa = PBXBuildFile; fileRef = 564A77D61CA171410023FEF8 /* BreakOutGameLevel5.txt */; };
 		56FBD3CA1CA3864500026289 /* Basso.caf in Resources */ = {isa = PBXBuildFile; fileRef = 56FBD3C71CA3864500026289 /* Basso.caf */; };
 		56FBD3CB1CA3864500026289 /* Ping.caf in Resources */ = {isa = PBXBuildFile; fileRef = 56FBD3C81CA3864500026289 /* Ping.caf */; };
 		56FBD3CC1CA3864500026289 /* Pop.caf in Resources */ = {isa = PBXBuildFile; fileRef = 56FBD3C91CA3864500026289 /* Pop.caf */; };
-		56FBD3CF1CA38D8800026289 /* BreakOutGameLevel3.txt in Resources */ = {isa = PBXBuildFile; fileRef = 56FBD3CE1CA38D8800026289 /* BreakOutGameLevel3.txt */; };
+		56FBD3CF1CA38D8800026289 /* BreakOutGameLevel6.txt in Resources */ = {isa = PBXBuildFile; fileRef = 56FBD3CE1CA38D8800026289 /* BreakOutGameLevel6.txt */; };
+		56FBD3D31CA3B50C00026289 /* BreakOutGameLevel2.txt in Resources */ = {isa = PBXBuildFile; fileRef = 56FBD3D01CA3B50C00026289 /* BreakOutGameLevel2.txt */; };
+		56FBD3D41CA3B50C00026289 /* BreakOutGameLevel3.txt in Resources */ = {isa = PBXBuildFile; fileRef = 56FBD3D11CA3B50C00026289 /* BreakOutGameLevel3.txt */; };
+		56FBD3D51CA3B50C00026289 /* BreakOutGameLevel4.txt in Resources */ = {isa = PBXBuildFile; fileRef = 56FBD3D21CA3B50C00026289 /* BreakOutGameLevel4.txt */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -45,11 +48,14 @@
 		564A77CF1CA1692D0023FEF8 /* Define.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Define.swift; sourceTree = "<group>"; };
 		564A77D11CA169480023FEF8 /* SpaceshipNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpaceshipNode.swift; sourceTree = "<group>"; };
 		564A77D41CA16D900023FEF8 /* BreakOutGameLevel1.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = BreakOutGameLevel1.txt; sourceTree = "<group>"; };
-		564A77D61CA171410023FEF8 /* BreakOutGameLevel2.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = BreakOutGameLevel2.txt; sourceTree = "<group>"; };
+		564A77D61CA171410023FEF8 /* BreakOutGameLevel5.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = BreakOutGameLevel5.txt; sourceTree = "<group>"; };
 		56FBD3C71CA3864500026289 /* Basso.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Basso.caf; sourceTree = "<group>"; };
 		56FBD3C81CA3864500026289 /* Ping.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Ping.caf; sourceTree = "<group>"; };
 		56FBD3C91CA3864500026289 /* Pop.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Pop.caf; sourceTree = "<group>"; };
-		56FBD3CE1CA38D8800026289 /* BreakOutGameLevel3.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = BreakOutGameLevel3.txt; sourceTree = "<group>"; };
+		56FBD3CE1CA38D8800026289 /* BreakOutGameLevel6.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = BreakOutGameLevel6.txt; sourceTree = "<group>"; };
+		56FBD3D01CA3B50C00026289 /* BreakOutGameLevel2.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = BreakOutGameLevel2.txt; sourceTree = "<group>"; };
+		56FBD3D11CA3B50C00026289 /* BreakOutGameLevel3.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = BreakOutGameLevel3.txt; sourceTree = "<group>"; };
+		56FBD3D21CA3B50C00026289 /* BreakOutGameLevel4.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = BreakOutGameLevel4.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,8 +110,11 @@
 			isa = PBXGroup;
 			children = (
 				564A77D41CA16D900023FEF8 /* BreakOutGameLevel1.txt */,
-				56FBD3CE1CA38D8800026289 /* BreakOutGameLevel3.txt */,
-				564A77D61CA171410023FEF8 /* BreakOutGameLevel2.txt */,
+				56FBD3D01CA3B50C00026289 /* BreakOutGameLevel2.txt */,
+				56FBD3D11CA3B50C00026289 /* BreakOutGameLevel3.txt */,
+				56FBD3D21CA3B50C00026289 /* BreakOutGameLevel4.txt */,
+				564A77D61CA171410023FEF8 /* BreakOutGameLevel5.txt */,
+				56FBD3CE1CA38D8800026289 /* BreakOutGameLevel6.txt */,
 			);
 			path = content;
 			sourceTree = "<group>";
@@ -181,16 +190,19 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				56FBD3CF1CA38D8800026289 /* BreakOutGameLevel3.txt in Resources */,
+				56FBD3CF1CA38D8800026289 /* BreakOutGameLevel6.txt in Resources */,
 				564A77D51CA16D900023FEF8 /* BreakOutGameLevel1.txt in Resources */,
 				564A77BA1CA168AA0023FEF8 /* GameScene.sks in Resources */,
 				56FBD3CA1CA3864500026289 /* Basso.caf in Resources */,
 				56FBD3CC1CA3864500026289 /* Pop.caf in Resources */,
+				56FBD3D51CA3B50C00026289 /* BreakOutGameLevel4.txt in Resources */,
+				56FBD3D31CA3B50C00026289 /* BreakOutGameLevel2.txt in Resources */,
 				564A77C61CA168AA0023FEF8 /* LaunchScreen.storyboard in Resources */,
 				564A77C31CA168AA0023FEF8 /* Assets.xcassets in Resources */,
+				56FBD3D41CA3B50C00026289 /* BreakOutGameLevel3.txt in Resources */,
 				564A77C11CA168AA0023FEF8 /* Main.storyboard in Resources */,
 				56FBD3CB1CA3864500026289 /* Ping.caf in Resources */,
-				564A77D71CA171410023FEF8 /* BreakOutGameLevel2.txt in Resources */,
+				564A77D71CA171410023FEF8 /* BreakOutGameLevel5.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
