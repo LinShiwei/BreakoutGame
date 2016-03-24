@@ -23,7 +23,7 @@ enum KindOfGift : String{
     case Bullet = "BulletGift"
 }
 let maxLife = 100
-let startLevel = 1
-let endLevel = 2
+let startLevel = 3
+let endLevel = 3
 let levelFileNamePrefix = "BreakOutGameLevel"
 let shipSize = CGSize(width: UIScreen.mainScreen().bounds.size.width*3/10, height: UIScreen.mainScreen().bounds.size.height/40)

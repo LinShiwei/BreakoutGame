@@ -9,7 +9,7 @@
 import UIKit
 import SpriteKit
 class BallNode: SKSpriteNode {
-
+    var hasShoot = false
     func setupAtPosition(pos:CGPoint,inNode node:SKNode){
         name = "ball"
         position = CGPoint(x: pos.x + node.position.x, y: pos.y + node.position.y)
@@ -22,9 +22,9 @@ class BallNode: SKSpriteNode {
         physicsBody = SKPhysicsBody(circleOfRadius: size.width / 2.0)
         physicsBody!.categoryBitMask = PhysicsCategory.Ball
         physicsBody!.collisionBitMask = PhysicsCategory.Wall | PhysicsCategory.Spaceship | PhysicsCategory.Ball | PhysicsCategory.Brick | PhysicsCategory.Stone
-        physicsBody!.contactTestBitMask = PhysicsCategory.Brick | PhysicsCategory.DeadLine
+        physicsBody!.contactTestBitMask = PhysicsCategory.Brick | PhysicsCategory.DeadLine | PhysicsCategory.Spaceship
         physicsBody!.mass = 0.1
-        physicsBody!.friction = 1
+        physicsBody!.friction = 0
         physicsBody!.restitution = 1
         physicsBody!.linearDamping = 0
         //        physicsBody!.dynamic = false
@@ -33,11 +33,10 @@ class BallNode: SKSpriteNode {
     }
     func shootAfterDuration(duration:NSTimeInterval){
         let shootAction = SKAction.sequence([SKAction.waitForDuration(duration),SKAction.runBlock{
-            
+            self.hasShoot = true
             self.constraints?.first?.enabled = false
-            self.physicsBody!.friction = 0
-            self.physicsBody!.velocity = CGVector(dx: 0, dy: 0)
-            self.physicsBody!.applyImpulse(CGVector(dx: 40, dy: 40))
+//            self.physicsBody!.velocity = CGVector(dx: 0, dy: 0)
+            self.physicsBody!.applyImpulse(CGVector(dx: 50, dy: 50))
             
             }]
         )

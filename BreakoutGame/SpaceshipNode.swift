@@ -21,12 +21,11 @@ class SpaceshipNode: SKSpriteNode {
     func configurePhysicsWith(bodySize:CGSize){
         physicsBody = SKPhysicsBody(rectangleOfSize: bodySize)
         physicsBody!.categoryBitMask = PhysicsCategory.Spaceship
-        physicsBody!.contactTestBitMask = PhysicsCategory.Gift
+        physicsBody!.contactTestBitMask = PhysicsCategory.Gift | PhysicsCategory.Ball
         physicsBody!.collisionBitMask = PhysicsCategory.Ball | PhysicsCategory.Wall
+        physicsBody!.mass = 10
         physicsBody!.affectedByGravity = false
         physicsBody!.restitution = 0
-        physicsBody!.friction = 1
-        physicsBody!.mass = 2
 //        physicsBody!.dynamic = false
     }
     func configureConstraints(){

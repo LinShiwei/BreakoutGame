@@ -22,6 +22,10 @@
 		564A77D21CA169480023FEF8 /* SpaceshipNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 564A77D11CA169480023FEF8 /* SpaceshipNode.swift */; };
 		564A77D51CA16D900023FEF8 /* BreakOutGameLevel1.txt in Resources */ = {isa = PBXBuildFile; fileRef = 564A77D41CA16D900023FEF8 /* BreakOutGameLevel1.txt */; };
 		564A77D71CA171410023FEF8 /* BreakOutGameLevel2.txt in Resources */ = {isa = PBXBuildFile; fileRef = 564A77D61CA171410023FEF8 /* BreakOutGameLevel2.txt */; };
+		56FBD3CA1CA3864500026289 /* Basso.caf in Resources */ = {isa = PBXBuildFile; fileRef = 56FBD3C71CA3864500026289 /* Basso.caf */; };
+		56FBD3CB1CA3864500026289 /* Ping.caf in Resources */ = {isa = PBXBuildFile; fileRef = 56FBD3C81CA3864500026289 /* Ping.caf */; };
+		56FBD3CC1CA3864500026289 /* Pop.caf in Resources */ = {isa = PBXBuildFile; fileRef = 56FBD3C91CA3864500026289 /* Pop.caf */; };
+		56FBD3CF1CA38D8800026289 /* BreakOutGameLevel3.txt in Resources */ = {isa = PBXBuildFile; fileRef = 56FBD3CE1CA38D8800026289 /* BreakOutGameLevel3.txt */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +46,10 @@
 		564A77D11CA169480023FEF8 /* SpaceshipNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpaceshipNode.swift; sourceTree = "<group>"; };
 		564A77D41CA16D900023FEF8 /* BreakOutGameLevel1.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = BreakOutGameLevel1.txt; sourceTree = "<group>"; };
 		564A77D61CA171410023FEF8 /* BreakOutGameLevel2.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = BreakOutGameLevel2.txt; sourceTree = "<group>"; };
+		56FBD3C71CA3864500026289 /* Basso.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Basso.caf; sourceTree = "<group>"; };
+		56FBD3C81CA3864500026289 /* Ping.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Ping.caf; sourceTree = "<group>"; };
+		56FBD3C91CA3864500026289 /* Pop.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Pop.caf; sourceTree = "<group>"; };
+		56FBD3CE1CA38D8800026289 /* BreakOutGameLevel3.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = BreakOutGameLevel3.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,11 +82,10 @@
 		564A77B61CA168AA0023FEF8 /* BreakoutGame */ = {
 			isa = PBXGroup;
 			children = (
+				56FBD3CD1CA3869600026289 /* support */,
 				564A77D11CA169480023FEF8 /* SpaceshipNode.swift */,
 				5608639D1CA22A130032B555 /* BallNode.swift */,
 				560863A11CA23F0B0032B555 /* GiftNode.swift */,
-				564A77CF1CA1692D0023FEF8 /* Define.swift */,
-				564A77CD1CA168E70023FEF8 /* Helper.swift */,
 				564A77B71CA168AA0023FEF8 /* AppDelegate.swift */,
 				564A77B91CA168AA0023FEF8 /* GameScene.sks */,
 				564A77BB1CA168AA0023FEF8 /* GameScene.swift */,
@@ -97,9 +104,22 @@
 			isa = PBXGroup;
 			children = (
 				564A77D41CA16D900023FEF8 /* BreakOutGameLevel1.txt */,
+				56FBD3CE1CA38D8800026289 /* BreakOutGameLevel3.txt */,
 				564A77D61CA171410023FEF8 /* BreakOutGameLevel2.txt */,
 			);
 			path = content;
+			sourceTree = "<group>";
+		};
+		56FBD3CD1CA3869600026289 /* support */ = {
+			isa = PBXGroup;
+			children = (
+				56FBD3C71CA3864500026289 /* Basso.caf */,
+				56FBD3C81CA3864500026289 /* Ping.caf */,
+				56FBD3C91CA3864500026289 /* Pop.caf */,
+				564A77CF1CA1692D0023FEF8 /* Define.swift */,
+				564A77CD1CA168E70023FEF8 /* Helper.swift */,
+			);
+			name = support;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -161,11 +181,15 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				56FBD3CF1CA38D8800026289 /* BreakOutGameLevel3.txt in Resources */,
 				564A77D51CA16D900023FEF8 /* BreakOutGameLevel1.txt in Resources */,
 				564A77BA1CA168AA0023FEF8 /* GameScene.sks in Resources */,
+				56FBD3CA1CA3864500026289 /* Basso.caf in Resources */,
+				56FBD3CC1CA3864500026289 /* Pop.caf in Resources */,
 				564A77C61CA168AA0023FEF8 /* LaunchScreen.storyboard in Resources */,
 				564A77C31CA168AA0023FEF8 /* Assets.xcassets in Resources */,
 				564A77C11CA168AA0023FEF8 /* Main.storyboard in Resources */,
+				56FBD3CB1CA3864500026289 /* Ping.caf in Resources */,
 				564A77D71CA171410023FEF8 /* BreakOutGameLevel2.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -126,14 +126,12 @@ class GameScene: SKScene,SKPhysicsContactDelegate {
     func createSpaceship(){
         let texture = SKTexture(imageNamed: "Spaceship")
         let spaceship = SpaceshipNode(texture: texture, size: shipSize)
-//        let spaceship = SpaceshipNode(color: shipColor, size: shipSize)
         spaceship.setupAtPosition(CGPoint(x: size.width/2, y: size.height/7 + shipSize.height/2))
         addChild(spaceship)
     }
     func createWall(){
         initWallAtOrientation("Left")
         initWallAtOrientation("Right")
-        //        initWallAtOrientation("Bottom")
         initWallAtOrientation("Top")
         
     }
@@ -191,8 +189,6 @@ class GameScene: SKScene,SKPhysicsContactDelegate {
     func createBrickAt(row row:Int,column:Int){
         let imageName = "Brick" + String(RandomInt(min: 1, max: 4))
         let texture = SKTexture(imageNamed: imageName)
-//        let color = GKRandomSource.sharedRandom().arrayByShufflingObjectsInArray(brickColors) as! [UIColor]
-//        let brick = SKSpriteNode(color: color[0], size: brickSize)
         let brick = SKSpriteNode(texture: texture, size: brickSize)
         brick.position = CGPoint(x: CGFloat(column+1) * brickSize.width, y: size.height-brickSize.width/2+brickSize.height/2-CGFloat(row+1)*brickSize.height)
         
@@ -210,7 +206,6 @@ class GameScene: SKScene,SKPhysicsContactDelegate {
     func createStoneAt(row row:Int,column:Int){
         let texture = SKTexture(imageNamed: "Stone")
         let stone = SKSpriteNode(texture: texture, size: brickSize)
-//        let stone = SKSpriteNode(color: UIColor.grayColor(), size: brickSize)
         stone.position = CGPoint(x: CGFloat(column+1) * brickSize.width, y: size.height-brickSize.width/2+brickSize.height/2-CGFloat(row+1)*brickSize.height)
         
         stone.zPosition = NodeZPosition.Stone.rawValue
@@ -281,6 +276,8 @@ class GameScene: SKScene,SKPhysicsContactDelegate {
             switch (firstNode.name , secondNode.name){
             case ("ball"?,"brick"?):
                 ballHitBrick(ball:firstNode as! BallNode, brick: secondNode as! SKSpriteNode)
+            case ("ball"?,"spaceship"?):
+                ballHitSpaceship(firstNode as! BallNode)
             case ("spaceship"?,_):
                 if secondNode is GiftNode {
                     spaceshipEatGift(spaceship: firstNode as! SpaceshipNode, gift: secondNode as! GiftNode)
@@ -298,8 +295,12 @@ class GameScene: SKScene,SKPhysicsContactDelegate {
         }
     }
     func ballHitBrick(ball ball:BallNode,brick:SKSpriteNode){
+        runAction(SKAction.playSoundFileNamed("Pop.caf", waitForCompletion: false))
         destoryBrick(brick)
-        
+    }
+    func ballHitSpaceship(ball:BallNode){
+        guard ball.hasShoot else{return}
+        runAction(SKAction.playSoundFileNamed("Ping.caf", waitForCompletion: false))
     }
     func spaceshipEatGift(spaceship spaceship:SpaceshipNode,gift:GiftNode){
         spaceship.strengthenWith(KindOfGift(rawValue: gift.name!)!)
@@ -310,6 +311,7 @@ class GameScene: SKScene,SKPhysicsContactDelegate {
         if node.name == "ball"{
             node.name = ""
             node.removeFromParent()
+            runAction(SKAction.playSoundFileNamed("Basso.caf", waitForCompletion: false))
             life -= 1
             if life == 0 {
                 gameOver()
@@ -319,7 +321,6 @@ class GameScene: SKScene,SKPhysicsContactDelegate {
         }else{
             node.name = ""
             node.removeFromParent()
-        
         }
     }
     func bulletHitWall(bullet:SKSpriteNode){
