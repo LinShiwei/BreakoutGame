@@ -74,12 +74,7 @@ class SpaceshipNode: SKSpriteNode {
             runAction(SKAction.repeatAction(createBulletAction,count: 20),withKey: "BulletAction")
         case .Triple:
             if let gameScene = self.parent,let ball = gameScene.childNodeWithName("ball") as? BallNode,let velocity = ball.physicsBody?.velocity{
-//                let pos : CGPoint
-//                if !ball.hasShoot{
-//                    pos = CGPoint(x: ball.position.x+ball.size.width,y: ball.position.y )
-//                }else{
-//                    pos = ball.position
-//                }
+
                 var angle :CGFloat
                 if velocity == CGVector(dx: 0, dy: 0) {
                     angle = 3.14/4.0

@@ -27,8 +27,6 @@ class BallNode: SKSpriteNode {
         physicsBody!.restitution = 1
         physicsBody!.linearDamping = 0
         //        physicsBody!.dynamic = false
-        
-
     }
     func shootAfterDuration(duration:NSTimeInterval,atAngel angle:CGFloat=CGFloat(M_PI_4)){
         let impulse = CGVector(dx: 75*cos(angle), dy: 75*sin(angle))

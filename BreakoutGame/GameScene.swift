@@ -94,7 +94,7 @@ class GameScene: SKScene,SKPhysicsContactDelegate {
     override func update(currentTime: CFTimeInterval) {
         #if !(arch(i386) || arch(x86_64))
             if let accelerometerData = motionManager.accelerometerData,let spaceshipNode = childNodeWithName("spaceship") as? SpaceshipNode{
-                spaceshipNode.physicsBody!.velocity = CGVector(dx: accelerometerData.acceleration.x * 1000, dy: 0)
+                spaceshipNode.physicsBody!.velocity = CGVector(dx: accelerometerData.acceleration.x * 1200, dy: 0)
             }
         #endif
     }
@@ -159,7 +159,6 @@ class GameScene: SKScene,SKPhysicsContactDelegate {
             size = CGSize(width: self.size.width - thickness, height: thickness)
             position = CGPoint(x: self.size.width/2, y: 0)
         }
-//        let wall = SKSpriteNode(color: wallColor, size: size)
         let wall = SKSpriteNode(texture: texture, color: UIColor.blueColor(), size: size)
         wall.name = "wall"
         wall.zPosition = NodeZPosition.Wall.rawValue
@@ -191,7 +190,6 @@ class GameScene: SKScene,SKPhysicsContactDelegate {
         let texture = SKTexture(imageNamed: imageName)
         let brick = SKSpriteNode(texture: texture, size: brickSize)
         brick.position = CGPoint(x: CGFloat(column+1) * brickSize.width, y: size.height-brickSize.width/2+brickSize.height/2-CGFloat(row+1)*brickSize.height)
-        
         brick.zPosition = NodeZPosition.Brick.rawValue
         brick.physicsBody = SKPhysicsBody(rectangleOfSize: brick.size)
         brick.physicsBody!.categoryBitMask = PhysicsCategory.Brick
@@ -207,7 +205,6 @@ class GameScene: SKScene,SKPhysicsContactDelegate {
         let texture = SKTexture(imageNamed: "Stone")
         let stone = SKSpriteNode(texture: texture, size: brickSize)
         stone.position = CGPoint(x: CGFloat(column+1) * brickSize.width, y: size.height-brickSize.width/2+brickSize.height/2-CGFloat(row+1)*brickSize.height)
-        
         stone.zPosition = NodeZPosition.Stone.rawValue
         stone.physicsBody = SKPhysicsBody(rectangleOfSize: stone.size)
         stone.physicsBody!.categoryBitMask = PhysicsCategory.Stone
@@ -233,8 +230,7 @@ class GameScene: SKScene,SKPhysicsContactDelegate {
                             createBrickAt(row: row, column: column)
                         }
                     }
-                }
-                
+                }                
         }
     }
     func createBall(){
@@ -296,7 +292,6 @@ class GameScene: SKScene,SKPhysicsContactDelegate {
         }
     }
     func ballHitBrick(ball ball:BallNode,brick:SKSpriteNode){
-        runAction(SKAction.playSoundFileNamed("Pop.caf", waitForCompletion: false))
         destoryBrick(brick)
     }
     func ballHitSpaceship(ball:BallNode){
@@ -339,6 +334,7 @@ class GameScene: SKScene,SKPhysicsContactDelegate {
         if RandomInt(min: 1, max: 100) < 50 {
             createGiftAtPosition(brick.position)
         }
+        runAction(SKAction.playSoundFileNamed("Pop.caf", waitForCompletion: false))
         brick.name = ""
         brick.removeFromParent()
         if let _ = childNodeWithName("brick"){
