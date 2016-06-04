@@ -44,6 +44,23 @@ class GameScene: SKScene,SKPhysicsContactDelegate {
             }
         }
     }
+    
+    var gobalBestLevel : Int {
+        get{
+            return fetchGobalBestLevel()
+        }
+        set{
+            
+        }
+    }
+    var bestLevel : Int{
+        get{
+            return NSUserDefaults.standardUserDefaults().integerForKey("BestLevel")
+        }
+        set{
+            
+        }
+    }
     var lifeLabel: SKLabelNode!
     var life: Int = maxLife {
         didSet {
@@ -51,6 +68,7 @@ class GameScene: SKScene,SKPhysicsContactDelegate {
         }
     }
     var gameIsOver = false
+    
     
     //MARK: View
     override func didMoveToView(view: SKView) {
@@ -98,7 +116,7 @@ class GameScene: SKScene,SKPhysicsContactDelegate {
             }
         #endif
     }
-    
+    //MARK: Create Nodes
     func createBackground(){
         let texture = SKTexture(imageNamed: "Background2")
         let background = SKSpriteNode(texture: texture, size: size)
@@ -220,7 +238,17 @@ class GameScene: SKScene,SKPhysicsContactDelegate {
         let fileName = levelFileNamePrefix + String(level)
         if let levelPath = NSBundle.mainBundle().pathForResource(fileName, ofType: "txt"),
             let levelString = try? String(contentsOfFile: levelPath, usedEncoding: nil) {
-                
+//                let manager = NSFileManager.defaultManager()
+//                do{
+//                    let string = try manager.contentsOfDirectoryAtPath(NSBundle.mainBundle().resourcePath!)
+//                    print(string)
+//                }catch{
+//                    
+//                }
+//                print(NSBundle.mainBundle().resourcePath)
+//                let appFilePath = (NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true)[0]) + "/"
+//                print(appFilePath)
+//                print(levelPath)
                 let lines = levelString.componentsSeparatedByString("\n")
                 for (row, line) in lines.enumerate() {
                     for (column, letter) in line.characters.enumerate() where line.characters.count<=bricksColumnInt{
@@ -248,17 +276,56 @@ class GameScene: SKScene,SKPhysicsContactDelegate {
         addChild(gift)
     }
     func createGameOverNode(){
+        let medalPlate = createMedalPlate()
+        
         let gameOverLabel = SKSpriteNode(texture: SKTexture(imageNamed: "GameOver"))
-        gameOverLabel.position = CGPointMake(size.width/2, size.height/2)
+        gameOverLabel.position = CGPoint(x: size.width/2,y: size.height/2 + medalPlate.size.height*2/3)
         gameOverLabel.zPosition = NodeZPosition.GameOver.rawValue
         
         let gameOverNode = SKSpriteNode(color: UIColor(white: 0.2, alpha: 0.3), size: size)
         gameOverNode.anchorPoint = CGPoint(x: 0, y: 0)
         gameOverNode.zPosition = NodeZPosition.GameOverNode.rawValue
+        gameOverNode.addChild(medalPlate)
         gameOverNode.addChild(gameOverLabel)
         gameOverNode.name = "gameOverNode"
         addChild(gameOverNode)
     }
+    func createMedalPlate()->SKSpriteNode{
+        let medalPlate = SKSpriteNode(texture: SKTexture(imageNamed: "MedalPlate"))
+        medalPlate.position = CGPoint(x: size.width/2,y: size.height/2)
+        medalPlate.zPosition = NodeZPosition.MedalPlate.rawValue
+        
+        
+        let currentLevelLabel = SKLabelNode(text:"Level " + String(level))
+        currentLevelLabel.fontName = "Helvetica-Bold"
+        currentLevelLabel.zPosition = medalPlate.zPosition
+        currentLevelLabel.fontSize = 36/232 * medalPlate.size.height
+        currentLevelLabel.fontColor = UIColor(white: 0.3, alpha: 1)
+        currentLevelLabel.horizontalAlignmentMode = .Right
+        currentLevelLabel.position = CGPoint(x: medalPlate.size.width*180/452, y: medalPlate.size.height*16/232)
+        medalPlate.addChild(currentLevelLabel)
+        
+        let bestLevelLabel = SKLabelNode(text:"Level " + String(bestLevel))
+        bestLevelLabel.fontName = "Helvetica-Bold"
+        bestLevelLabel.zPosition = medalPlate.zPosition
+        bestLevelLabel.fontSize = 36/232 * medalPlate.size.height
+        bestLevelLabel.fontColor = UIColor(white: 0.3, alpha: 1)
+        bestLevelLabel.horizontalAlignmentMode = .Right
+        bestLevelLabel.position = CGPoint(x: medalPlate.size.width*180/452, y: -medalPlate.size.height*70/232)
+        medalPlate.addChild(bestLevelLabel)
+        
+        let gobalBestLevelLabel = SKLabelNode(text:"Level " + String(gobalBestLevel))
+        gobalBestLevelLabel.fontName = "Helvetica-Bold"
+        gobalBestLevelLabel.zPosition = medalPlate.zPosition
+        gobalBestLevelLabel.fontSize = 36/232 * medalPlate.size.height
+        gobalBestLevelLabel.fontColor = UIColor(white: 0.3, alpha: 1)
+        gobalBestLevelLabel.horizontalAlignmentMode = .Right
+        gobalBestLevelLabel.position = CGPoint(x: -medalPlate.size.width*180/452, y: -medalPlate.size.height*70/232)
+//        medalPlate.addChild(gobalBestLevelLabel)
+        
+        return medalPlate
+    }
+    //MARK: Contact
     func didBeginContact(contact: SKPhysicsContact) {
         var firstBody: SKPhysicsBody
         var secondBody: SKPhysicsBody
@@ -350,13 +417,16 @@ class GameScene: SKScene,SKPhysicsContactDelegate {
         bullet.name = ""
         bullet.removeFromParent()
     }
+    //MARK: Game Cycle
     func gameOver(){
         if let spaceship = childNodeWithName("spaceship"){
             spaceship.removeAllActions()
         }
         gameIsOver = true
         physicsWorld.speed = 0
+        recordLevel()
         createGameOverNode()
+        
     }
     func refreshLevel(){
         enumerateChildNodesWithName("ball"){ ball,_ in
@@ -385,6 +455,22 @@ class GameScene: SKScene,SKPhysicsContactDelegate {
             newGame.life = maxLife
         }else{
             newGame.life = currentLife
+        }
+    }
+    //MARK:
+    func fetchGobalBestLevel()->Int{
+        return 10
+    }
+    func updateGobalBestLevelWith(level:Int) {
+        
+    }
+    func recordLevel(){
+        if level > bestLevel {
+            NSUserDefaults.standardUserDefaults().setValue(level, forKey: "BestLevel")
+            bestLevel = level
+        }
+        if level > gobalBestLevel {
+            updateGobalBestLevelWith(level)
         }
     }
 }

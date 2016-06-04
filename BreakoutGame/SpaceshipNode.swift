@@ -26,7 +26,6 @@ class SpaceshipNode: SKSpriteNode {
         physicsBody!.mass = 10
         physicsBody!.affectedByGravity = false
         physicsBody!.restitution = 0
-//        physicsBody!.dynamic = false
     }
     func configureConstraints(){
         let rangeY = SKRange(constantValue: position.y)
