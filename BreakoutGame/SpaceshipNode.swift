@@ -10,16 +10,16 @@ import UIKit
 import SpriteKit
 class SpaceshipNode: SKSpriteNode {
 
-    func setupAtPosition(pos:CGPoint){
+    func setupAtPosition(_ pos:CGPoint){
         name = "spaceship"
         position = pos
-        zPosition = NodeZPosition.Spaceship.rawValue
+        zPosition = NodeZPosition.spaceship.rawValue
 
         configurePhysicsWith(size)
         configureConstraints()
     }
-    func configurePhysicsWith(bodySize:CGSize){
-        physicsBody = SKPhysicsBody(rectangleOfSize: bodySize)
+    func configurePhysicsWith(_ bodySize:CGSize){
+        physicsBody = SKPhysicsBody(rectangleOf: bodySize)
         physicsBody!.categoryBitMask = PhysicsCategory.Spaceship
         physicsBody!.contactTestBitMask = PhysicsCategory.Gift | PhysicsCategory.Ball
         physicsBody!.collisionBitMask = PhysicsCategory.Ball | PhysicsCategory.Wall
@@ -35,23 +35,23 @@ class SpaceshipNode: SKSpriteNode {
             SKConstraint.zRotation(rangeZRotation)
         ]
     }
-    func strengthenWith(gift:KindOfGift){
+    func strengthenWith(_ gift:KindOfGift){
         switch gift{
         case .Length:
-            self.removeActionForKey("LengthAction")
+            self.removeAction(forKey: "LengthAction")
             let changeLengthAction = SKAction.sequence([
-                SKAction.runBlock{
-                self.size.width = UIScreen.mainScreen().bounds.width/2
+                SKAction.run{
+                self.size.width = UIScreen.main.bounds.width/2
                 self.configurePhysicsWith(self.size)
                 },
-                SKAction.waitForDuration(5),
-                SKAction.runBlock{
+                SKAction.wait(forDuration: 5),
+                SKAction.run{
                 
                 self.size = shipSize
                 self.configurePhysicsWith(self.size)
                 if let scene = self.parent as? SKScene {
-                    scene.enumerateChildNodesWithName("ball"){ [weak self] ball,_ in
-                        if let ballNode = ball as? BallNode where !ballNode.hasShoot{
+                    scene.enumerateChildNodes(withName: "ball"){ [weak self] ball,_ in
+                        if let ballNode = ball as? BallNode , !ballNode.hasShoot{
                             let point = CGPoint(x: self!.size.width/6, y: self!.size.height/2+ballNode.size.height/2)
                             ballNode.configureDistanceConstraintToPoint(point,inNode:self!)
                         }
@@ -59,20 +59,20 @@ class SpaceshipNode: SKSpriteNode {
                 }
                 }]
             )
-            runAction(changeLengthAction,withKey: "LengthAction")
+            run(changeLengthAction,withKey: "LengthAction")
         case .Bullet:
-            self.removeActionForKey("BulletAction")
+            self.removeAction(forKey: "BulletAction")
             let createBulletAction = SKAction.sequence([
-                SKAction.runBlock{
+                SKAction.run{
                     self.createBulletAtPosition(CGPoint(x: self.size.width/6, y: 0))
                     self.createBulletAtPosition(CGPoint(x: -self.size.width/6, y: 0))
                 },
-                SKAction.waitForDuration(0.2)
+                SKAction.wait(forDuration: 0.2)
                 ]
             )
-            runAction(SKAction.repeatAction(createBulletAction,count: 20),withKey: "BulletAction")
+            run(SKAction.repeat(createBulletAction,count: 20),withKey: "BulletAction")
         case .Triple:
-            if let gameScene = self.parent,let ball = gameScene.childNodeWithName("ball") as? BallNode,let velocity = ball.physicsBody?.velocity{
+            if let gameScene = self.parent,let ball = gameScene.childNode(withName: "ball") as? BallNode,let velocity = ball.physicsBody?.velocity{
 
                 var angle :CGFloat
                 if velocity == CGVector(dx: 0, dy: 0) {
@@ -97,7 +97,7 @@ class SpaceshipNode: SKSpriteNode {
             break
         }
     }
-    func createBulletAtPosition(pos:CGPoint){
+    func createBulletAtPosition(_ pos:CGPoint){
         let bullet = SKSpriteNode(imageNamed: "Bullet")
         bullet.name = "bullet"
         bullet.physicsBody = SKPhysicsBody(circleOfRadius: bullet.size.width / 2.0)
@@ -108,7 +108,7 @@ class SpaceshipNode: SKSpriteNode {
         bullet.physicsBody!.affectedByGravity = false
         bullet.physicsBody!.velocity = CGVector(dx: 0, dy: 800)
         bullet.position = pos
-        bullet.zPosition = NodeZPosition.Bullet.rawValue
+        bullet.zPosition = NodeZPosition.bullet.rawValue
         addChild(bullet)
     }
     

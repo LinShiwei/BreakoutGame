@@ -9,14 +9,14 @@
 import UIKit
 import SpriteKit
 class GiftNode: SKSpriteNode {
-    func setupAtPosition(pos:CGPoint){
+    func setupAtPosition(_ pos:CGPoint){
         configureGift()
         position = pos
-        zPosition = NodeZPosition.Gift.rawValue
+        zPosition = NodeZPosition.gift.rawValue
         configurePhysics()
     }
     func configurePhysics(){
-        physicsBody = SKPhysicsBody(rectangleOfSize: size)
+        physicsBody = SKPhysicsBody(rectangleOf: size)
         physicsBody!.categoryBitMask = PhysicsCategory.Gift
         physicsBody!.contactTestBitMask = PhysicsCategory.Spaceship | PhysicsCategory.DeadLine
         physicsBody!.collisionBitMask = PhysicsCategory.None
@@ -30,16 +30,16 @@ class GiftNode: SKSpriteNode {
         switch randomNumber{
         case 1...32:
             name = KindOfGift.Length.rawValue
-            color = UIColor.blueColor()
+            color = UIColor.blue
         case 33...65:
             name = KindOfGift.Bullet.rawValue
-            color = UIColor.redColor()
+            color = UIColor.red
         case 66...99:
             name = KindOfGift.Triple.rawValue
-            color = UIColor.greenColor()
+            color = UIColor.green
         case 100:
             name = KindOfGift.Magnet.rawValue
-            color = UIColor.purpleColor()
+            color = UIColor.purple
         default:break
         }
     }

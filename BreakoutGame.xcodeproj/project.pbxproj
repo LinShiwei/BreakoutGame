@@ -96,12 +96,7 @@
 				564A77B91CA168AA0023FEF8 /* GameScene.sks */,
 				564A77BB1CA168AA0023FEF8 /* GameScene.swift */,
 				564A77BD1CA168AA0023FEF8 /* GameViewController.swift */,
-				564A77BF1CA168AA0023FEF8 /* Main.storyboard */,
-				564A77C21CA168AA0023FEF8 /* Assets.xcassets */,
 				564A77D31CA16D900023FEF8 /* content */,
-				564A77C41CA168AA0023FEF8 /* LaunchScreen.storyboard */,
-				564A77C71CA168AA0023FEF8 /* Info.plist */,
-				5608639F1CA22ACB0032B555 /* Backup.swift */,
 			);
 			path = BreakoutGame;
 			sourceTree = "<group>";
@@ -122,11 +117,16 @@
 		56FBD3CD1CA3869600026289 /* support */ = {
 			isa = PBXGroup;
 			children = (
+				564A77CD1CA168E70023FEF8 /* Helper.swift */,
+				564A77CF1CA1692D0023FEF8 /* Define.swift */,
+				564A77BF1CA168AA0023FEF8 /* Main.storyboard */,
+				564A77C41CA168AA0023FEF8 /* LaunchScreen.storyboard */,
+				564A77C21CA168AA0023FEF8 /* Assets.xcassets */,
 				56FBD3C71CA3864500026289 /* Basso.caf */,
 				56FBD3C81CA3864500026289 /* Ping.caf */,
 				56FBD3C91CA3864500026289 /* Pop.caf */,
-				564A77CF1CA1692D0023FEF8 /* Define.swift */,
-				564A77CD1CA168E70023FEF8 /* Helper.swift */,
+				564A77C71CA168AA0023FEF8 /* Info.plist */,
+				5608639F1CA22ACB0032B555 /* Backup.swift */,
 			);
 			name = support;
 			sourceTree = "<group>";
@@ -158,12 +158,13 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0720;
-				LastUpgradeCheck = 0720;
+				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = Linsw;
 				TargetAttributes = {
 					564A77B31CA168AA0023FEF8 = {
 						CreatedOnToolsVersion = 7.2;
 						DevelopmentTeam = 4F6NMKB449;
+						LastSwiftMigration = 0800;
 					};
 				};
 			};
@@ -260,8 +261,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -305,8 +308,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -325,6 +330,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				TARGETED_DEVICE_FAMILY = 2;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -338,6 +344,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = lsw.self.BreakoutGame;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -349,6 +356,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = lsw.self.BreakoutGame;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};

@@ -14,16 +14,16 @@ class GameViewController: UIViewController {
     var currentGame: GameScene!
     
     @IBOutlet weak var pauseButton: UIButton!
-    @IBAction func refreshButtonTap(sender: UIButton) {
+    @IBAction func refreshButtonTap(_ sender: UIButton) {
         currentGame.refreshLevel()
     }
-    @IBAction func pauseButtonTap(sender: UIButton) {
-        if currentGame.paused {
-            pauseButton.setImage(UIImage(named: "Pause"), forState: .Normal)
+    @IBAction func pauseButtonTap(_ sender: UIButton) {
+        if currentGame.isPaused {
+            pauseButton.setImage(UIImage(named: "Pause"), for: UIControlState())
         }else{
-            pauseButton.setImage(UIImage(named: "Play"), forState: .Normal)
+            pauseButton.setImage(UIImage(named: "Play"), for: UIControlState())
         }
-        currentGame.paused = !currentGame.paused
+        currentGame.isPaused = !currentGame.isPaused
     }
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,7 +39,7 @@ class GameViewController: UIViewController {
             
             /* Set the scale mode to scale to fit the window */
             //            scene.scaleMode = .AspectFill
-            scene.scaleMode = .ResizeFill
+            scene.scaleMode = .resizeFill
             
             skView.presentScene(scene)
             
@@ -48,15 +48,15 @@ class GameViewController: UIViewController {
         }
     }
     
-    override func shouldAutorotate() -> Bool {
+    override var shouldAutorotate : Bool {
         return true
     }
     
-    override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
-        if UIDevice.currentDevice().userInterfaceIdiom == .Phone {
-            return .AllButUpsideDown
+    override var supportedInterfaceOrientations : UIInterfaceOrientationMask {
+        if UIDevice.current.userInterfaceIdiom == .phone {
+            return .allButUpsideDown
         } else {
-            return .All
+            return .all
         }
     }
     
@@ -65,7 +65,7 @@ class GameViewController: UIViewController {
         // Release any cached data, images, etc that aren't in use.
     }
     
-    override func prefersStatusBarHidden() -> Bool {
+    override var prefersStatusBarHidden : Bool {
         return true
     }
 }

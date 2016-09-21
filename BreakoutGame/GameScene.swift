@@ -24,12 +24,12 @@ struct PhysicsCategory {
 }
 class GameScene: SKScene,SKPhysicsContactDelegate {
     //MARK: Property
-    let wallColor = UIColor.blackColor()
-    let shipColor = UIColor.whiteColor()
-    let giftColor = UIColor.yellowColor()
+    let wallColor = UIColor.black
+    let shipColor = UIColor.white
+    let giftColor = UIColor.yellow
     let bricksColumn = CGFloat(10)
     let bricksColumnInt = 10
-    let brickColors = [UIColor.greenColor(),UIColor.redColor(),UIColor.blueColor()]
+    let brickColors = [UIColor.green,UIColor.red,UIColor.blue]
     var brickSize:CGSize!
     
     weak var viewController: GameViewController!
@@ -55,7 +55,7 @@ class GameScene: SKScene,SKPhysicsContactDelegate {
     }
     var bestLevel : Int{
         get{
-            return NSUserDefaults.standardUserDefaults().integerForKey("BestLevel")
+            return UserDefaults.standard.integer(forKey: "BestLevel")
         }
         set{
             
@@ -71,7 +71,7 @@ class GameScene: SKScene,SKPhysicsContactDelegate {
     
     
     //MARK: View
-    override func didMoveToView(view: SKView) {
+    override func didMove(to view: SKView) {
         brickSize = CGSize(width:size.width/(bricksColumn+1), height: 30)
         self.physicsWorld.gravity = CGVector(dx: 0, dy: 0)
         self.physicsWorld.contactDelegate = self
@@ -91,14 +91,14 @@ class GameScene: SKScene,SKPhysicsContactDelegate {
         
     }
     //MARK: Touch
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         if gameIsOver {
             enterLevelAt()
         }else{
             #if (arch(i386) || arch(x86_64))
-                if let touch = touches.first,let spaceshipNode = childNodeWithName("spaceship") {
+                if let touch = touches.first,let spaceshipNode = childNode(withName: "spaceship") {
                     
-                    let location = touch.locationInNode(self)
+                    let location = touch.location(in: self)
                     if location.x > spaceshipNode.position.x{
                         spaceshipNode.physicsBody!.velocity = CGVector(dx: 500, dy: 0)
                     }else{
@@ -109,7 +109,7 @@ class GameScene: SKScene,SKPhysicsContactDelegate {
         }
     }
     
-    override func update(currentTime: CFTimeInterval) {
+    override func update(_ currentTime: TimeInterval) {
         #if !(arch(i386) || arch(x86_64))
             if let accelerometerData = motionManager.accelerometerData,let spaceshipNode = childNodeWithName("spaceship") as? SpaceshipNode{
                 spaceshipNode.physicsBody!.velocity = CGVector(dx: accelerometerData.acceleration.x * 1200, dy: 0)
@@ -121,24 +121,24 @@ class GameScene: SKScene,SKPhysicsContactDelegate {
         let texture = SKTexture(imageNamed: "Background2")
         let background = SKSpriteNode(texture: texture, size: size)
         background.position = CGPoint(x: size.width/2, y: size.height/2)
-        background.blendMode = .Replace
-        background.zPosition = NodeZPosition.Background.rawValue
+        background.blendMode = .replace
+        background.zPosition = NodeZPosition.background.rawValue
         addChild(background)
     }
     func createLevelLabel(){
         levelLabel = SKLabelNode(fontNamed: "Chalkduster")
         levelLabel.text = "Level: \(level)"
         levelLabel.position = CGPoint(x: size.width/(bricksColumn+1), y: size.width/(bricksColumn+1)/2)
-        levelLabel.horizontalAlignmentMode = .Left
-        levelLabel.zPosition = NodeZPosition.Label.rawValue
+        levelLabel.horizontalAlignmentMode = .left
+        levelLabel.zPosition = NodeZPosition.label.rawValue
         addChild(levelLabel)
     }
     func createLifeLabel(){
         lifeLabel = SKLabelNode(fontNamed: "Chalkduster")
         lifeLabel.text = "Life: \(life)"
         lifeLabel.position = CGPoint(x: size.width/(bricksColumn+1), y: size.width/(bricksColumn+1)/2+50)
-        lifeLabel.horizontalAlignmentMode = .Left
-        lifeLabel.zPosition = NodeZPosition.Label.rawValue
+        lifeLabel.horizontalAlignmentMode = .left
+        lifeLabel.zPosition = NodeZPosition.label.rawValue
         addChild(lifeLabel)
     }
     func createSpaceship(){
@@ -153,7 +153,7 @@ class GameScene: SKScene,SKPhysicsContactDelegate {
         initWallAtOrientation("Top")
         
     }
-    func initWallAtOrientation(orientation:String){
+    func initWallAtOrientation(_ orientation:String){
         let thickness = self.size.width / (bricksColumn+1)
         let size : CGSize
         let position : CGPoint
@@ -177,9 +177,9 @@ class GameScene: SKScene,SKPhysicsContactDelegate {
             size = CGSize(width: self.size.width - thickness, height: thickness)
             position = CGPoint(x: self.size.width/2, y: 0)
         }
-        let wall = SKSpriteNode(texture: texture, color: UIColor.blueColor(), size: size)
+        let wall = SKSpriteNode(texture: texture, color: UIColor.blue, size: size)
         wall.name = "wall"
-        wall.zPosition = NodeZPosition.Wall.rawValue
+        wall.zPosition = NodeZPosition.wall.rawValue
         wall.position = position
         wall.physicsBody = SKPhysicsBody(texture: texture, size: wall.size)
         wall.physicsBody!.categoryBitMask = PhysicsCategory.Wall
@@ -187,57 +187,57 @@ class GameScene: SKScene,SKPhysicsContactDelegate {
         wall.physicsBody!.contactTestBitMask = PhysicsCategory.Bullet
         wall.physicsBody!.affectedByGravity = false
         wall.physicsBody!.restitution = 0
-        wall.physicsBody!.dynamic = false
+        wall.physicsBody!.isDynamic = false
         addChild(wall)
     }
     func createDeadLine(){
-        let deadLine = SKSpriteNode(color: UIColor.clearColor(), size: CGSize(width: size.width, height: 1))
+        let deadLine = SKSpriteNode(color: UIColor.clear, size: CGSize(width: size.width, height: 1))
         deadLine.name = "deadLine"
         deadLine.position = CGPoint(x: size.width/2, y: -brickSize.height)
-        deadLine.zPosition = NodeZPosition.Wall.rawValue
-        deadLine.physicsBody = SKPhysicsBody(rectangleOfSize: deadLine.size)
+        deadLine.zPosition = NodeZPosition.wall.rawValue
+        deadLine.physicsBody = SKPhysicsBody(rectangleOf: deadLine.size)
         deadLine.physicsBody!.categoryBitMask = PhysicsCategory.DeadLine
         deadLine.physicsBody!.contactTestBitMask = PhysicsCategory.Ball | PhysicsCategory.Gift
         deadLine.physicsBody!.collisionBitMask = PhysicsCategory.None
         deadLine.physicsBody!.affectedByGravity = false
-        deadLine.physicsBody!.dynamic = false
+        deadLine.physicsBody!.isDynamic = false
         addChild(deadLine)
     }
-    func createBrickAt(row row:Int,column:Int){
+    func createBrickAt(row:Int,column:Int){
         let imageName = "Brick" + String(RandomInt(min: 1, max: 4))
         let texture = SKTexture(imageNamed: imageName)
         let brick = SKSpriteNode(texture: texture, size: brickSize)
         brick.position = CGPoint(x: CGFloat(column+1) * brickSize.width, y: size.height-brickSize.width/2+brickSize.height/2-CGFloat(row+1)*brickSize.height)
-        brick.zPosition = NodeZPosition.Brick.rawValue
-        brick.physicsBody = SKPhysicsBody(rectangleOfSize: brick.size)
+        brick.zPosition = NodeZPosition.brick.rawValue
+        brick.physicsBody = SKPhysicsBody(rectangleOf: brick.size)
         brick.physicsBody!.categoryBitMask = PhysicsCategory.Brick
         brick.physicsBody!.collisionBitMask = PhysicsCategory.Ball
         brick.physicsBody!.contactTestBitMask = PhysicsCategory.Ball
         brick.physicsBody!.affectedByGravity = false
         brick.physicsBody!.restitution = 0
-        brick.physicsBody!.dynamic = false
+        brick.physicsBody!.isDynamic = false
         brick.name = "brick"
         addChild(brick)
     }
-    func createStoneAt(row row:Int,column:Int){
+    func createStoneAt(row:Int,column:Int){
         let texture = SKTexture(imageNamed: "Stone")
         let stone = SKSpriteNode(texture: texture, size: brickSize)
         stone.position = CGPoint(x: CGFloat(column+1) * brickSize.width, y: size.height-brickSize.width/2+brickSize.height/2-CGFloat(row+1)*brickSize.height)
-        stone.zPosition = NodeZPosition.Stone.rawValue
-        stone.physicsBody = SKPhysicsBody(rectangleOfSize: stone.size)
+        stone.zPosition = NodeZPosition.stone.rawValue
+        stone.physicsBody = SKPhysicsBody(rectangleOf: stone.size)
         stone.physicsBody!.categoryBitMask = PhysicsCategory.Stone
         stone.physicsBody!.collisionBitMask = PhysicsCategory.Ball
         stone.physicsBody!.contactTestBitMask = PhysicsCategory.Bullet
         stone.physicsBody!.affectedByGravity = false
         stone.physicsBody!.restitution = 0
-        stone.physicsBody!.dynamic = false
+        stone.physicsBody!.isDynamic = false
         stone.name = "stone"
         addChild(stone)
     }
-    func createBricksAndStonesOfLevel(level:Int = startLevel) {
+    func createBricksAndStonesOfLevel(_ level:Int = startLevel) {
         let fileName = levelFileNamePrefix + String(level)
-        if let levelPath = NSBundle.mainBundle().pathForResource(fileName, ofType: "txt"),
-            let levelString = try? String(contentsOfFile: levelPath, usedEncoding: nil) {
+        if let levelPath = Bundle.main.path(forResource: fileName, ofType: "txt"),
+            let levelString = try? String(contentsOfFile: levelPath) {
 //                let manager = NSFileManager.defaultManager()
 //                do{
 //                    let string = try manager.contentsOfDirectoryAtPath(NSBundle.mainBundle().resourcePath!)
@@ -249,9 +249,9 @@ class GameScene: SKScene,SKPhysicsContactDelegate {
 //                let appFilePath = (NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true)[0]) + "/"
 //                print(appFilePath)
 //                print(levelPath)
-                let lines = levelString.componentsSeparatedByString("\n")
-                for (row, line) in lines.enumerate() {
-                    for (column, letter) in line.characters.enumerate() where line.characters.count<=bricksColumnInt{
+                let lines = levelString.components(separatedBy: "\n")
+                for (row, line) in lines.enumerated() {
+                    for (column, letter) in line.characters.enumerated() where line.characters.count<=bricksColumnInt{
                         if letter == "s" {
                             createStoneAt(row: row, column: column)
                         } else if letter == "b" {
@@ -262,7 +262,7 @@ class GameScene: SKScene,SKPhysicsContactDelegate {
         }
     }
     func createBall(){
-        guard let spaceshipNode = childNodeWithName("spaceship") as? SpaceshipNode else{return}
+        guard let spaceshipNode = childNode(withName: "spaceship") as? SpaceshipNode else{return}
         let ball = BallNode(imageNamed: "BallBlue")
         let point = CGPoint(x: spaceshipNode.size.width/6, y: spaceshipNode.size.height/2+ball.size.height/2)
         ball.setupAtPosition(point,inNode:spaceshipNode)
@@ -270,7 +270,7 @@ class GameScene: SKScene,SKPhysicsContactDelegate {
         addChild(ball)
         ball.shootAfterDuration(2)
     }
-    func createGiftAtPosition(pos:CGPoint){
+    func createGiftAtPosition(_ pos:CGPoint){
         let gift = GiftNode(color: giftColor, size: brickSize)
         gift.setupAtPosition(pos)
         addChild(gift)
@@ -280,11 +280,11 @@ class GameScene: SKScene,SKPhysicsContactDelegate {
         
         let gameOverLabel = SKSpriteNode(texture: SKTexture(imageNamed: "GameOver"))
         gameOverLabel.position = CGPoint(x: size.width/2,y: size.height/2 + medalPlate.size.height*2/3)
-        gameOverLabel.zPosition = NodeZPosition.GameOver.rawValue
+        gameOverLabel.zPosition = NodeZPosition.gameOver.rawValue
         
         let gameOverNode = SKSpriteNode(color: UIColor(white: 0.2, alpha: 0.3), size: size)
         gameOverNode.anchorPoint = CGPoint(x: 0, y: 0)
-        gameOverNode.zPosition = NodeZPosition.GameOverNode.rawValue
+        gameOverNode.zPosition = NodeZPosition.gameOverNode.rawValue
         gameOverNode.addChild(medalPlate)
         gameOverNode.addChild(gameOverLabel)
         gameOverNode.name = "gameOverNode"
@@ -293,7 +293,7 @@ class GameScene: SKScene,SKPhysicsContactDelegate {
     func createMedalPlate()->SKSpriteNode{
         let medalPlate = SKSpriteNode(texture: SKTexture(imageNamed: "MedalPlate"))
         medalPlate.position = CGPoint(x: size.width/2,y: size.height/2)
-        medalPlate.zPosition = NodeZPosition.MedalPlate.rawValue
+        medalPlate.zPosition = NodeZPosition.medalPlate.rawValue
         
         
         let currentLevelLabel = SKLabelNode(text:"Level " + String(level))
@@ -301,7 +301,7 @@ class GameScene: SKScene,SKPhysicsContactDelegate {
         currentLevelLabel.zPosition = medalPlate.zPosition
         currentLevelLabel.fontSize = 36/232 * medalPlate.size.height
         currentLevelLabel.fontColor = UIColor(white: 0.3, alpha: 1)
-        currentLevelLabel.horizontalAlignmentMode = .Right
+        currentLevelLabel.horizontalAlignmentMode = .right
         currentLevelLabel.position = CGPoint(x: medalPlate.size.width*180/452, y: medalPlate.size.height*16/232)
         medalPlate.addChild(currentLevelLabel)
         
@@ -310,7 +310,7 @@ class GameScene: SKScene,SKPhysicsContactDelegate {
         bestLevelLabel.zPosition = medalPlate.zPosition
         bestLevelLabel.fontSize = 36/232 * medalPlate.size.height
         bestLevelLabel.fontColor = UIColor(white: 0.3, alpha: 1)
-        bestLevelLabel.horizontalAlignmentMode = .Right
+        bestLevelLabel.horizontalAlignmentMode = .right
         bestLevelLabel.position = CGPoint(x: medalPlate.size.width*180/452, y: -medalPlate.size.height*70/232)
         medalPlate.addChild(bestLevelLabel)
         
@@ -319,14 +319,14 @@ class GameScene: SKScene,SKPhysicsContactDelegate {
         gobalBestLevelLabel.zPosition = medalPlate.zPosition
         gobalBestLevelLabel.fontSize = 36/232 * medalPlate.size.height
         gobalBestLevelLabel.fontColor = UIColor(white: 0.3, alpha: 1)
-        gobalBestLevelLabel.horizontalAlignmentMode = .Right
+        gobalBestLevelLabel.horizontalAlignmentMode = .right
         gobalBestLevelLabel.position = CGPoint(x: -medalPlate.size.width*180/452, y: -medalPlate.size.height*70/232)
 //        medalPlate.addChild(gobalBestLevelLabel)
         
         return medalPlate
     }
     //MARK: Contact
-    func didBeginContact(contact: SKPhysicsContact) {
+    func didBegin(_ contact: SKPhysicsContact) {
         var firstBody: SKPhysicsBody
         var secondBody: SKPhysicsBody
         if contact.bodyA.categoryBitMask < contact.bodyB.categoryBitMask {
@@ -358,24 +358,24 @@ class GameScene: SKScene,SKPhysicsContactDelegate {
             }
         }
     }
-    func ballHitBrick(ball ball:BallNode,brick:SKSpriteNode){
+    func ballHitBrick(ball:BallNode,brick:SKSpriteNode){
         destoryBrick(brick)
     }
-    func ballHitSpaceship(ball:BallNode){
+    func ballHitSpaceship(_ ball:BallNode){
         guard ball.hasShoot else{return}
-        runAction(SKAction.playSoundFileNamed("Ping.caf", waitForCompletion: false))
+        run(SKAction.playSoundFileNamed("Ping.caf", waitForCompletion: false))
     }
-    func spaceshipEatGift(spaceship spaceship:SpaceshipNode,gift:GiftNode){
+    func spaceshipEatGift(spaceship:SpaceshipNode,gift:GiftNode){
         spaceship.strengthenWith(KindOfGift(rawValue: gift.name!)!)
         gift.name = ""
         gift.removeFromParent()
     }
-    func nodeHitDeadLine(node:SKSpriteNode){
+    func nodeHitDeadLine(_ node:SKSpriteNode){
         if node.name == "ball"{
             node.name = ""
             node.removeFromParent()
-            guard let _ = childNodeWithName("ball") else{
-                runAction(SKAction.playSoundFileNamed("Basso.caf", waitForCompletion: false))
+            guard let _ = childNode(withName: "ball") else{
+                run(SKAction.playSoundFileNamed("Basso.caf", waitForCompletion: false))
                 life -= 1
                 if life == 0 {
                     gameOver()
@@ -390,21 +390,21 @@ class GameScene: SKScene,SKPhysicsContactDelegate {
             node.removeFromParent()
         }
     }
-    func bulletHitWall(bullet:SKSpriteNode){
+    func bulletHitWall(_ bullet:SKSpriteNode){
         consumeBullet(bullet)
     }
-    func bulletHitBrick(brick:SKSpriteNode,bullet:SKSpriteNode){
+    func bulletHitBrick(_ brick:SKSpriteNode,bullet:SKSpriteNode){
         destoryBrick(brick)
         consumeBullet(bullet)
     }
-    func destoryBrick(brick:SKSpriteNode){
+    func destoryBrick(_ brick:SKSpriteNode){
         if RandomInt(min: 1, max: 100) < 50 {
             createGiftAtPosition(brick.position)
         }
-        runAction(SKAction.playSoundFileNamed("Pop.caf", waitForCompletion: false))
+        run(SKAction.playSoundFileNamed("Pop.caf", waitForCompletion: false))
         brick.name = ""
         brick.removeFromParent()
-        if let _ = childNodeWithName("brick"){
+        if let _ = childNode(withName: "brick"){
         }else{
             if level+1 > endLevel {
                 enterLevelAt(level: endLevel)
@@ -413,13 +413,13 @@ class GameScene: SKScene,SKPhysicsContactDelegate {
             }
         }
     }
-    func consumeBullet(bullet:SKSpriteNode){
+    func consumeBullet(_ bullet:SKSpriteNode){
         bullet.name = ""
         bullet.removeFromParent()
     }
     //MARK: Game Cycle
     func gameOver(){
-        if let spaceship = childNodeWithName("spaceship"){
+        if let spaceship = childNode(withName: "spaceship"){
             spaceship.removeAllActions()
         }
         gameIsOver = true
@@ -429,7 +429,7 @@ class GameScene: SKScene,SKPhysicsContactDelegate {
         
     }
     func refreshLevel(){
-        enumerateChildNodesWithName("ball"){ ball,_ in
+        enumerateChildNodes(withName: "ball"){ ball,_ in
             ball.name = ""
             ball.removeFromParent()
         }
@@ -441,7 +441,7 @@ class GameScene: SKScene,SKPhysicsContactDelegate {
         }
     
     }
-    func enterLevelAt(level level:Int=startLevel){
+    func enterLevelAt(level:Int=startLevel){
         let currentLife = life
         let newGame = GameScene(size: self.size)
         newGame.level = level
@@ -449,7 +449,7 @@ class GameScene: SKScene,SKPhysicsContactDelegate {
         physicsWorld.speed = 0
         self.viewController.currentGame = newGame
         
-        let transition = SKTransition.crossFadeWithDuration(1)
+        let transition = SKTransition.crossFade(withDuration: 1)
         self.view?.presentScene(newGame, transition: transition)
         if level == startLevel {
             newGame.life = maxLife
@@ -461,12 +461,12 @@ class GameScene: SKScene,SKPhysicsContactDelegate {
     func fetchGobalBestLevel()->Int{
         return 10
     }
-    func updateGobalBestLevelWith(level:Int) {
+    func updateGobalBestLevelWith(_ level:Int) {
         
     }
     func recordLevel(){
         if level > bestLevel {
-            NSUserDefaults.standardUserDefaults().setValue(level, forKey: "BestLevel")
+            UserDefaults.standard.setValue(level, forKey: "BestLevel")
             bestLevel = level
         }
         if level > gobalBestLevel {
