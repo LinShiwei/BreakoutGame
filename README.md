@@ -5,6 +5,8 @@ A Breakout Game for Swift practice.
 
 ![image](https://raw.githubusercontent.com/LinShiwei/BreakoutGame/master/BreakoutGame1.gif)
 
+![image](https://raw.githubusercontent.com/LinShiwei/BreakoutGame/master/BreakoutGame2.gif)
+
 ## Feature
 
 - Gravity induction (Touch to control in simulator).
